@@ -1,21 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+    //Create a web server that listens on port 3000
+    //When you visit the root URL, it should display a list of comments
+    //When you visit the URL /new, it should display a form that lets you submit a new comment
+
     const app = express();
     const port = 3000;
 
-    let comments = ['This is the first comment!', 'Here is another comment.'];
-
     app.use(bodyParser.urlencoded({ extended: true }));
+
+    let comments = ['This is the first comment!', 'Here is another comment.'];
 
     // Route to display the list of comments
     app.get('/', (req, res) => {
         let commentList = comments.map(comment => `<li>${comment}</li>`).join('');
-        res.send(`
-            <h1>Comments</h1>
-            <ul>${commentList}</ul>
-            <a href="/new">Add a new comment</a>
-        `);
+        res.send(`<h1>Comments</h1><ul>${commentList}</ul><a href="/new">Add a new comment</a>`);
     });
 
     // Route to display the form for adding a new comment
@@ -26,7 +26,6 @@ const bodyParser = require('body-parser');
                 <textarea name="comment" rows="4" cols="50" required></textarea><br>
                 <button type="submit">Submit</button>
             </form>
-            <a href="/">Back to comments</a>
         `);
     });
 
@@ -39,7 +38,6 @@ const bodyParser = require('body-parser');
         res.redirect('/');
     });
 
-    // Start the server
     app.listen(port, () => {
         console.log(`Server is running on http://localhost:${port}`);
     });
